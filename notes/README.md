@@ -22,4 +22,4 @@ Chronological (01 → 05) is the intended order — later notes reference concep
 
 ## Sanitisation
 
-Internal network addresses have been redacted. Where the original notes referenced specific IPs (`192.168.1.100` for the Proxmox host, `192.168.1.101` for Pi-hole, etc.), the published versions use generic placeholders (`192.168.x.100`, `192.168.x.101`). The last octet is preserved because it identifies which service is being discussed; the identifying subnet is removed. Similarly, the specific Tailscale IP is replaced with `100.x.x.x`. No credentials, tokens, or API keys are present in these notes — placeholders were used from the start.
+Internal network addresses have been redacted. The published versions use generic placeholders (`192.168.x.100`, `192.168.x.101`, etc.) in place of the original internal addresses. The last octet is preserved because it identifies which service is being discussed; the identifying subnet is removed. Similarly, the specific Tailscale IP is replaced with `100.x.x.x`. No credentials, tokens, or API keys are present in these notes — placeholders were used from the start.
