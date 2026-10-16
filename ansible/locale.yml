@@ -1,0 +1,32 @@
+---
+- name: Ensure a consistent locale across all hosts
+  hosts: all
+  become: true
+  tasks:
+    - name: Install the locales package
+      ansible.builtin.apt:
+        name: locales
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Enable en_US.UTF-8 in locale.gen
+      ansible.builtin.lineinfile:
+        path: /etc/locale.gen
+        regexp: '^#?\s*en_US\.UTF-8 UTF-8'
+        line: 'en_US.UTF-8 UTF-8'
+      notify: Generate locales
+
+    - name: Set the system default LANG
+      ansible.builtin.copy:
+        dest: /etc/default/locale
+        content: "LANG=en_US.UTF-8\n"
+        owner: root
+        group: root
+        mode: '0644'
+
+  handlers:
+    - name: Generate locales
+      ansible.builtin.command:
+        cmd: locale-gen
+      changed_when: true

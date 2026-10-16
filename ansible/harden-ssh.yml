@@ -1,0 +1,32 @@
+---
+- name: Harden SSH and install desktop key across all hosts
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Johnny's desktop public key for root
+      ansible.builtin.authorized_key:
+        user: root
+        state: present
+        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEt+q8IpCRt+UidNp+yX0RnsCO9B2A9xRc2Mq6ieJlg0 johnny@ubuntu-lemonlab"
+
+    - name: Disable SSH password authentication
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PasswordAuthentication'
+        line: 'PasswordAuthentication no'
+        validate: 'sshd -t -f %s'
+      notify: Restart sshd
+
+    - name: Set root login to key-only
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PermitRootLogin'
+        line: 'PermitRootLogin prohibit-password'
+        validate: 'sshd -t -f %s'
+      notify: Restart sshd
+
+  handlers:
+    - name: Restart sshd
+      ansible.builtin.service:
+        name: ssh
+        state: restarted

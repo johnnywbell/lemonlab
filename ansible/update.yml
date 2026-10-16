@@ -1,0 +1,13 @@
+---
+- name: Update and upgrade all hosts
+  hosts: all
+  become: true
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Upgrade all packages (safe upgrade)
+      ansible.builtin.apt:
+        upgrade: safe

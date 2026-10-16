@@ -1,0 +1,21 @@
+[monitoring]
+pihole      ansible_host=192.168.x.101
+uptimekuma  ansible_host=192.168.x.102
+homepage    ansible_host=192.168.x.103
+prometheus  ansible_host=192.168.x.104
+grafana     ansible_host=192.168.x.105
+qbt-exporter ansible_host=192.168.x.112
+
+[media]
+prowlarr    ansible_host=192.168.x.106
+lidarr      ansible_host=192.168.x.107
+qbittorrent ansible_host=192.168.x.108
+flaresolverr ansible_host=192.168.x.109
+navidrome   ansible_host=192.168.x.110
+
+[all:vars]
+ansible_user=root
+ansible_python_interpreter=/usr/bin/python3
+
+[control]
+ansible-node ansible_host=192.168.x.111 ansible_connection=local
